@@ -2,6 +2,10 @@
 
 This document reorganizes the original chat transcript into a cleaner topic flow. Each section captures a distinct question and the relevant answer.
 
+Related note:
+
+- [Debian Minimization for Homelab](/Users/travisnguyen/Documents/Coursera/homelab/debian-minimization.md)
+
 ## Recommended Topic Sequence
 
 1. Create a bootable USB from macOS
@@ -204,6 +208,8 @@ Download:
 ### Short answer
 
 Install Debian without a desktop environment. Enable SSH during setup and keep the base system minimal.
+
+For a dedicated low-RAM and low-power tuning checklist, see [Debian Minimization for Homelab](/Users/travisnguyen/Documents/Coursera/homelab/debian-minimization.md).
 
 ### Boot workflow
 
