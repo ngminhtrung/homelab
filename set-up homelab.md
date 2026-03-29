@@ -5,6 +5,7 @@ This document reorganizes the original chat transcript into a cleaner topic flow
 Related note:
 
 - [Debian Minimization for Homelab](/Users/travisnguyen/Documents/Coursera/homelab/debian-minimization.md)
+- [Close-Lid Tips for ThinkPad T450](/Users/travisnguyen/Documents/Coursera/homelab/close-lid.md)
 
 ## Recommended Topic Sequence
 
@@ -210,6 +211,7 @@ Download:
 Install Debian without a desktop environment. Enable SSH during setup and keep the base system minimal.
 
 For a dedicated low-RAM and low-power tuning checklist, see [Debian Minimization for Homelab](/Users/travisnguyen/Documents/Coursera/homelab/debian-minimization.md).
+For lid-close behavior that keeps SSH and Docker running, see [Close-Lid Tips for ThinkPad T450](/Users/travisnguyen/Documents/Coursera/homelab/close-lid.md).
 
 ### Boot workflow
 
