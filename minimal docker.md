@@ -218,11 +218,19 @@ Keep the homelab layout explicit, service-oriented, and predictable.
 │   └── compose/
 ├── scripts
 │   ├── backup-n8n.sh
+│   ├── log-energy.sh
 │   ├── update-all.sh
-│   └── healthcheck.sh
+│   ├── healthcheck.sh
+│   └── latest-energy-log
 ├── logs
 │   ├── backup-n8n.log
-│   └── maintenance.log
+│   ├── maintenance.log
+│   └── energy/
+│       ├── current.csv
+│       └── README.txt
+├── systemd
+│   ├── energy-log.service
+│   └── energy-log.timer
 └── docs
     ├── ports.md
     ├── services.md
@@ -235,6 +243,78 @@ Keep the homelab layout explicit, service-oriented, and predictable.
 - data stays near the service that owns it
 - scripts and backups stay outside container state
 - recovery is easier because paths remain stable
+
+### Recommended naming for future discoverability
+
+If you choose the ultra-minimal energy logger, use the word `energy` everywhere, even if the data is really a mix of power, battery, and CPU package metrics.
+
+Use these exact paths and names:
+
+- Script: `~/homelab/scripts/log-energy.sh`
+- Summary helper: `~/homelab/scripts/summarize-energy.sh`
+- Log folder: `~/homelab/logs/energy/`
+- Current log file: `~/homelab/logs/energy/current.csv`
+- Human note: `~/homelab/logs/energy/README.txt`
+- Easy shortcut: `~/homelab/scripts/latest-energy-log`
+- Service name: `energy-log.service`
+- Timer name: `energy-log.timer`
+
+That gives you several recovery paths later:
+
+- `find ~/homelab -iname '*energy*'`
+- `rg -n "energy|power|battery|rapl" ~/homelab`
+- `systemctl list-timers | grep energy`
+- `ls ~/homelab/logs/energy`
+
+### Ultra-minimal energy logger plan
+
+Use a host script plus a `systemd` timer, not a container.
+
+What it should do:
+
+- Run every 5 minutes
+- Append one CSV row to `~/homelab/logs/energy/current.csv`
+- Record timestamp, AC state, battery percentages, battery energy, battery power draw, and any readable Intel RAPL counters
+- Keep a `README.txt` in the same folder that explains what created the file and how to query it
+- Maintain `~/homelab/scripts/latest-energy-log` as a symlink to `../logs/energy/current.csv`
+
+Suggested CSV columns:
+
+```text
+timestamp,ac_online,bat0_pct,bat1_pct,bat0_wh,bat1_wh,bat0_w,bat1_w,rapl_package_uj,rapl_core_uj,rapl_uncore_uj,rapl_dram_uj
+```
+
+### Why this is easier to find later
+
+- The path lives under both `scripts/` and `logs/`, which are the first places most people check.
+- The timer and service both contain `energy`, so `systemctl` searches are obvious.
+- The log folder contains its own `README.txt`, so opening the directory explains itself.
+- `current.csv` is plain on purpose, which makes it easy to grep, inspect in File Browser, or import elsewhere later.
+
+### Suggested `README.txt` contents
+
+Store this in `~/homelab/logs/energy/README.txt`:
+
+```text
+Energy logging for this host lives here.
+
+Main log:
+- ~/homelab/logs/energy/current.csv
+
+Collector:
+- ~/homelab/scripts/log-energy.sh
+
+Scheduler:
+- energy-log.service
+- energy-log.timer
+
+Helpful commands:
+- tail -n 20 ~/homelab/logs/energy/current.csv
+- ~/homelab/scripts/summarize-energy.sh 24
+- systemctl status energy-log.timer
+- systemctl list-timers | grep energy
+- find ~/homelab -iname '*energy*'
+```
 
 This structure builds on the Debian host baseline described in [set-up homelab.md](set-up homelab.md).
 
