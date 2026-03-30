@@ -4,6 +4,11 @@ This document is a second-pass rewrite focused on actual `n8n` deployment for th
 
 It is organized as a sequence of practical questions and answers rather than a raw chat transcript.
 
+Related notes:
+
+- [set-up homelab.md](set-up homelab.md)
+- [minimal docker.md](minimal docker.md)
+
 ## Recommended Topic Sequence
 
 1. What is the recommended deployment model for n8n?

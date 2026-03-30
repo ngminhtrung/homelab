@@ -6,6 +6,8 @@ Related note:
 
 - [Debian Minimization for Homelab](/Users/travisnguyen/Documents/Coursera/homelab/debian-minimization.md)
 - [Close-Lid Tips for ThinkPad T450](/Users/travisnguyen/Documents/Coursera/homelab/close-lid.md)
+- [minimal docker.md](minimal docker.md)
+- [deploy n8n.md](deploy n8n.md)
 
 ## Recommended Topic Sequence
 
